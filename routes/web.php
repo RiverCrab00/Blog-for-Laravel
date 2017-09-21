@@ -22,5 +22,6 @@ Route::group(['prefix'=>'home','namespace'=>'Home'],function(){
        Route::get('captcha','MemberController@captcha');
        Route::match(['get','post'],'sendSms','MemberController@sendSms');
        Route::post('checkSms','MemberController@checkSms');
+       Route::post('checkCaptcha','MemberController@checkCaptcha');
     });
 });

@@ -20,12 +20,27 @@ class MemberController extends Controller
         }
     }
     function captcha(){
+        $mem=new \Memcache();
+        $mem->connect('127.0.0.1','11211');
         $phraseBuilder=new PhraseBuilder(4);
         $builder = new CaptchaBuilder(null,$phraseBuilder);
         $builder->build();
-        Session::set('captcha',$builder->getPhrase()); //存储验证码
+        $captcha=$builder->getPhrase();
+        $mem->set('captcha',$captcha,0,3000);
+        Session::set('captcha',$captcha); //存储验证码
         return response($builder->output())
             ->header('Content-type','image/jpeg');
+    }
+    function checkCaptcha(Request $request){
+        $code=$request->input('code');
+        $mem=new \Memcache();
+        $mem->connect('127.0.0.1','11211');
+        $captcha=$mem->get('captcha');
+        if($code==$captcha){
+            return 1;
+        }else{
+            return 0;
+        }
     }
     function checkSms(Request $request){
         $code=$request->input('code');

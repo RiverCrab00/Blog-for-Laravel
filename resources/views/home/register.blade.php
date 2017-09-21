@@ -212,14 +212,20 @@
         $("[name='code']").blur(function(){
             var span=$(this).parent().parent().find('span');
             var code=$(this).val();
-            var data={"code":code};
-            $.post("{:U('captcha')}",data,function(msg){
-                if(msg==1){
-                    span.html("<h4><i class='fa fa-check' style='color:green'></i></h4>");
-                }else{
-                    span.html("<font color='red'>验证码错误</font>");
+            $.ajax({
+                'url':"{{url('home/member/checkCaptcha')}}",
+                'data':{'code':code},
+                'dataType':'json',
+                'type':'post',
+                'headers':{'X-CSRF-TOKEN':'{{csrf_token()}}'},
+                'success':function(msg){
+                    if(msg){
+        span.html("<h4><i class='fa fa-check' style='color:green'></i></h4>");
+                    }else{
+                        span.html("<font color='red'>验证码错误</font>");
+                    }
                 }
-            })
+            });
         })
         /*function checkForm(){
             var span='';
