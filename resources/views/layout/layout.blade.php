@@ -4,7 +4,7 @@
     <title>博客</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="{{asset('Home')}}/style.css" rel="stylesheet" type="text/css" />
-
+    <link href="{{asset('Home')}}/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="{{asset('Home')}}/css/buttons.css" rel="stylesheet" type="text/css" />
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style type="text/css">
@@ -12,7 +12,18 @@
             float: right;
         }
         .button {
-            height: 35px;
+            height: 30px;
+        }
+        .logo {
+            padding: 8px 0 20px 20px;
+        }
+        .yanzheng{
+            display: inline-block;
+            width: 120px;
+        }
+        .menu_nav {
+            margin: 0px auto;
+            padding: 5px 20px;
         }
     </style>
     <script type="text/javascript" src="{{asset('Home')}}/js/cufon-yui.js"></script>
@@ -90,5 +101,57 @@
 <script>
     $("a:contains('注册')").click(function(){
        location.href="{{url('home/member/register')}}";
+    });
+    $('body').on('click',"#yanzheng",function(){
+       var src="{{Captcha::src()}}?"+Math.random();
+       $('#yanzheng').attr('src',src);
+    });
+    $("a:contains('登录')").click(function(){
+        layer.alert('登录', {
+            btn: ['登录', '取消'],
+            //title: false,//有标题可以拖拽
+            skin: 'layui-layer-lan',
+            closeBtn: 2,
+            anim: 4, //动画类型
+            content:'<div class="input-group">\n' +
+            '  <span class="input-group-addon"><i class="fa fa-user-o fa-fw"></i></span>\n' +
+            '  <input type="text" class="form-control" placeholder="用户名" id="mem_name">\n' +
+            '</div>'+'<div class="input-group"> <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span><input class="form-control" id="mem_pass" type="password" placeholder="Password"></div>'+'<div class="yanzheng"><input type="text" class="form-control" placeholder="验证码"  id="mem_code"></div><img class="yanzheng" id="yanzheng" src="{{captcha_src()}}">',
+            btn1:function(index){
+                var name=$('#mem_name').val();
+                var pass=$('#mem_pass').val();
+                var code=$('#mem_code').val();
+                var data={'name':name,'pass':pass,'code':code};
+                $.ajax({
+                    'url':"{{url('home/member/login')}}",
+                    'data':data,
+                    'dataType':'text',
+                    'type':'POST',
+                    'headers':{'X-CSRF-TOKEN':'{{csrf_token()}}'},
+                    'success':function(msg){
+                        if(msg==1){
+                            layer.alert('NB');
+                            layer.msg('登录成功',{
+                                'icon':6,
+                                'time':1000,
+                                'end':function(){
+                                    location.reload();
+                                }
+                            });
+                        }else{
+                            $('#yanzheng').click();
+                            console.log(msg);
+                            /*layer.msg(msg,{
+                                'icon':5,
+                                'time':1500,
+                                'end':function(){
+                                    location.reload();
+                                }
+                            });*/
+                        }
+                    }
+                });
+            }
+        });
     });
 </script>

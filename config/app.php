@@ -138,8 +138,9 @@ return [
     'providers' => [
 
         /*
-         * Laravel Framework Service Providers...
+         * Laravel Framework Service Providers...Laravel框架服务提供商...
          */
+        Mews\Captcha\CaptchaServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -188,11 +189,14 @@ return [
     | This array of class aliases will be registered when this application
     | is started. However, feel free to register as many as you wish as
     | the aliases are "lazy" loaded so they don't hinder performance.
+    |   这个类的别名将在这个应用程序中注册。
+    |   已启动。但是，可以随意注册任意数量的
+    |   别名是“惰性”的，所以它们不会妨碍性能。
     |
     */
 
     'aliases' => [
-
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,

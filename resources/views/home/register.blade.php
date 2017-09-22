@@ -18,25 +18,44 @@
     h4{
         display:inline;
     }
+    .right{
+        float: right;
+        position: absolute;
+        top:40%;
+        font-size: 18px;
+    }
+    ul,li{
+        list-style: none;
+    }
 </style>
 @section('content')
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    <!--错误信息-->
+                    @if(count($errors)>0)
+                    <div class="right col-md-4 col-md-pull-1 text-center">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form class="form-horizontal" action="{{url('home/member/register')}}" method="post">
+                            <form class="form-horizontal" action="{{url('home/member/register')}}" method="post">{{csrf_field()}}
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">用户名</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" placeholder="请输入用户名" name='name'>
+                                        <input type="text" class="form-control" placeholder="请输入用户名" name='mem_name'>
                                     </div>
                                     <span class='regex'></span>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">密码</label>
                                     <div class="col-sm-4">
-                                        <input type="password" class="form-control" placeholder="请输入密码"name='passwd'>
+                                        <input type="password" class="form-control" placeholder="请输入密码"name='mem_pass'>
                                     </div>
                                     <span class='regex'></span>
                                 </div>
@@ -50,7 +69,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">手机号</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" placeholder="请输入手机号" name="tel">
+                                        <input type="text" class="form-control" placeholder="请输入手机号" name="mem_phone">
                                     </div>
                                     <span class='regex'></span>
                                 </div>
@@ -89,7 +108,7 @@
 
     <script type="text/javascript">
         $('#sendMsg').click(function(){
-            var tel=$("[name='tel']").val();
+            var tel=$("[name='mem_phone']").val();
             $('#sendMsg').attr('disabled',true);
             nums=60;
             clock = setInterval(doLoop, 1000);
@@ -148,7 +167,7 @@
             var src="{{url('home/member/captcha')}}?"+Math.random();
             $(this).attr('src',src);
         })
-        $("[name='name']").blur(function(){
+        $("[name='mem_name']").blur(function(){
             var span=$(this).parent().parent().find('span');
             var str=$(this).val();
             var patt=/^\w{6,12}$/;
@@ -158,7 +177,7 @@
                 span.html("<font color='red'>请输入6-12位字母数字下划线</font>");
             }
         })
-        $("[name='passwd']").blur(function(){
+        $("[name='mem_pass']").blur(function(){
             var span=$(this).parent().parent().find('span');
             var pwd=$(this).val();
             var pwdReg=/^\w{6,30}$/;
@@ -170,16 +189,16 @@
                 span.html("<font color='red'>不符合规则</font>");
                 return false;
             }else if(lower1.test(pwd)||lower2.test(pwd)||lower3.test(pwd)){
-                span.html("<font color='#BCFD39'>弱</font>");
+                span.html("<font size='4' color='#FF3300'>弱</font>");
             }else if(mid.test(pwd)){
-                span.html("<font color='#8CFF5F'>中</font>");
+                span.html("<font size='4' color='#00CCCC'>中</font>");
             }else{
-                span.html("<font color='orange'>强</font>");
+                span.html("<font size='4' color='#00CC99'>强</font>");
             }
         })
         $("[name='re-passwd']").blur(function(){
             var span=$(this).parent().parent().find('span');
-            var pwd=$("[name='passwd']").val();
+            var pwd=$("[name='mem_pass']").val();
             var re_pwd=$(this).val();
             if(re_pwd==''){
                 span.html("<font color='red'>不能为空</font>");
@@ -199,7 +218,7 @@
                 span.html("<font color='red'>邮箱格式不正确</font>");
             }
         })
-        $("[name='tel']").blur(function(){
+        $("[name='mem_phone']").blur(function(){
             var span=$(this).parent().parent().find('span');
             var str=$(this).val();
             var patt=/^1(3|4|5|7|8)\d{9}$/;

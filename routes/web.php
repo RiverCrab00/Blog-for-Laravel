@@ -18,7 +18,8 @@ Route::group(['prefix'=>'home','namespace'=>'Home'],function(){
     Route::get('index','IndexController@index');
     Route::get('cookie','IndexController@cookie');
     Route::group(['prefix'=>'member'],function(){
-       Route::get('register','MemberController@register');
+       Route::match(['get','post'],'register','MemberController@register');
+       Route::post('login','MemberController@login');
        Route::get('captcha','MemberController@captcha');
        Route::match(['get','post'],'sendSms','MemberController@sendSms');
        Route::post('checkSms','MemberController@checkSms');
