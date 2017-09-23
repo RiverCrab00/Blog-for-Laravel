@@ -17,31 +17,29 @@ class MemberController extends Controller
     function register(Request $request){
         if($request->isMethod('post')){
             //获取表单数据
-            $data=$request->only(['mem_name','mem_pass','mem_phone']);
+            $data=$request->only(['mem_name','password','mem_phone']);
             $rules=[
                 'mem_name'=>'required|unique:member,mem_name',
-                'mem_pass'=>['required','regex:/^\w{6,30}$/'],
+                'password'=>['required','regex:/^\w{6,30}$/'],
                 'mem_phone'=>['required','regex:/^1[34578][0-9]{9}$/'],
             ];
-            $msgs=[
+            $megs=[
                 'mem_name.required'=>'用户名不能为空',
                 'mem_name.unique'=>'用户名已存在',
-                'mem_pass.required'=>'密码不能为空',
-                'mem_pass.regex'=>'密码非法',
+                'password.required'=>'密码不能为空',
+                'password.regex'=>'密码非法',
                 'mem_phone.required'=>'手机号不能为空',
                 'mem_phone.regex'=>'手机号不规范',
             ];
             //验证
-            $validator=Validator::make($data,$rules,$msgs);
-            var_dump($validator->errors()->messages());
-            die;
+            $validator=Validator::make($data,$rules,$megs);
             if($validator->passes()){
-                $data['mem_pass']=bcrypt($data['mem_pass']);
+                $data['password']=bcrypt($data['password']);
                 $res=Member::create($data);
                 if($res){
-                    redirect('home/index')->with('msg','注册成功');
+                    return redirect('home/index')->with('msg','注册成功');
                 }else{
-                    redirect('home/member/register')->with('msg','注册成功');
+                    return redirect('home/member/register')->with('msg','注册成功');
                 }
             }else{
                 return redirect('home/member/register')
@@ -120,16 +118,16 @@ class MemberController extends Controller
             'pass'=>['required','regex:/^\w{6,30}$/'],
             'code'=>'required|captcha',
         ];
-        $msgs=[
+        $megs=[
             'name.required'=>'用户名不能为空',
             'pass.required'=>'密码不能为空',
             'pass.regex'=>'用户名或密码错误',
             'code.required'=>'验证码不能为空',
             'code.captcha'=>'验证码错误'
         ];
-        $validator=Validator::make($data,$rules,$msgs);
+        $validator=Validator::make($data,$rules,$megs);
         if($validator->passes()){
-            $res=Auth::guard('home')->attempt(['mem_name'=>$name,'mem_pass'=>$pass]);
+            $res=Auth::guard('home')->attempt(['mem_name'=>$name,'password'=>$pass],1);
             if($res){
                 return 1;
             }else{

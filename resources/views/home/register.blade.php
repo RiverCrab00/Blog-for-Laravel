@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">密码</label>
                                     <div class="col-sm-4">
-                                        <input type="password" class="form-control" placeholder="请输入密码"name='mem_pass'>
+                                        <input type="password" class="form-control" placeholder="请输入密码"name='password'>
                                     </div>
                                     <span class='regex'></span>
                                 </div>
@@ -177,7 +177,7 @@
                 span.html("<font color='red'>请输入6-12位字母数字下划线</font>");
             }
         })
-        $("[name='mem_pass']").blur(function(){
+        $("[name='password']").blur(function(){
             var span=$(this).parent().parent().find('span');
             var pwd=$(this).val();
             var pwdReg=/^\w{6,30}$/;
@@ -198,7 +198,7 @@
         })
         $("[name='re-passwd']").blur(function(){
             var span=$(this).parent().parent().find('span');
-            var pwd=$("[name='mem_pass']").val();
+            var pwd=$("[name='password']").val();
             var re_pwd=$(this).val();
             if(re_pwd==''){
                 span.html("<font color='red'>不能为空</font>");

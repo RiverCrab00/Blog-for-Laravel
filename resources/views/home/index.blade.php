@@ -4,7 +4,13 @@
 
 @section('content')
   <!-- 页面内容 -->
-
+  <style type="text/css">
+      .content_resize {
+          margin: 0 auto;
+          padding: 0;
+          width: 905px;
+      }
+  </style>
   <div class="clr"></div>
   <div class="content">
     <div class="content_resize">

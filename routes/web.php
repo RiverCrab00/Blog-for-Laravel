@@ -25,4 +25,11 @@ Route::group(['prefix'=>'home','namespace'=>'Home'],function(){
        Route::post('checkSms','MemberController@checkSms');
        Route::post('checkCaptcha','MemberController@checkCaptcha');
     });
+    Route::match(['get','post'],'login','IndexController@login');
+});
+Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
+    Route::get('index','IndexController@index');
+    Route::group(['prefix'=>'manager'],function(){
+        Route::match(['get','post'],'login','ManagerController@login');
+    });
 });

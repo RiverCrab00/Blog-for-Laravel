@@ -42,8 +42,16 @@
             <div class="logo">
                 <h1><a href="index.html">Simple<span>writing</span></a><small>Let's go</small></h1>
                 <span id="right">
-                    <a href="javascript:void(0)">登录</a>
-                    <a href="javascript:void(0)">注册</a>
+                    @if(Auth::guest('home'))
+                        <a href="javascript:void(0)">
+                            欢迎您,{{Auth::guard('home')->user()->mem_name}}
+                        </a>
+                        <a href="{{url('home/member/logout')}}">注销</a>
+                    @else
+                        <a href="javascript:void(0)">登录</a>
+                        <a href="javascript:void(0)">注册</a>
+                    @endif
+
                 </span>
             </div>
             <div class="clr"></div>
@@ -130,10 +138,9 @@
                     'headers':{'X-CSRF-TOKEN':'{{csrf_token()}}'},
                     'success':function(msg){
                         if(msg==1){
-                            layer.alert('NB');
                             layer.msg('登录成功',{
                                 'icon':6,
-                                'time':1000,
+                                'time':1500,
                                 'end':function(){
                                     location.reload();
                                 }

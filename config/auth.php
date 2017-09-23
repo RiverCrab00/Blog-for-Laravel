@@ -49,7 +49,11 @@ return [
         ],
         'home'=>[
             'driver'=>'session',
-            'provider' => 'member',
+            'provider' => 'abc',
+        ],
+        'admin'=>[
+            'driver'=>'session',
+            'provider' => 'manager',
         ],
         'api' => [
             'driver' => 'token',
@@ -86,9 +90,13 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
-        'member'=>[
+        'abc'=>[
             'driver' => 'eloquent',
-            'model' => App\Home\Member::class,
+            'model' => App\Home\Member::class
+        ],
+        'manager'=>[
+            'driver' => 'eloquent',
+            'model' => App\Admin\Manager::class
         ],
         // 'users' => [
         //     'driver' => 'database',
@@ -104,10 +112,16 @@ return [
     | You may specify multiple password reset configurations if you have more
     | than one user table or model in the application and you want to have
     | separate password reset settings based on the specific user types.
+    如果您有更多的密码重置配置，您可以指定多个密码重置配置
+    在应用程序中有一个用户表或模型，你想要
+    基于特定用户类型的不同密码重置设置。
     |
     | The expire time is the number of minutes that the reset token should be
     | considered valid. This security feature keeps tokens short-lived so
     | they have less time to be guessed. You may change this as needed.
+    过期时间是重置令牌应该是几分钟的时间
+    被认为是有效的。这个安全特性使令牌持续时间很短
+    他们没有那么多时间去猜测。您可以根据需要更改此功能。
     |
     */
 
