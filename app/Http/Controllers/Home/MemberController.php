@@ -127,7 +127,7 @@ class MemberController extends Controller
         ];
         $validator=Validator::make($data,$rules,$megs);
         if($validator->passes()){
-            $res=Auth::guard('home')->attempt(['mem_name'=>$name,'password'=>$pass],1);
+            $res=Auth::guard('home')->attempt(['mem_name'=>$name,'password'=>$pass],true);
             if($res){
                 return 1;
             }else{
@@ -141,5 +141,14 @@ class MemberController extends Controller
             }
             return $str;
         }
+    }
+    function logout(){
+        Auth::guard('home')->logout();
+        return redirect('home/index');
+    }
+    function info(){
+        $res=Auth::guard('home')->user();
+        var_dump(Auth::guard('home')->check());
+        dd($res);
     }
 }

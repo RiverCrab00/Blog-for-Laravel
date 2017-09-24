@@ -6,11 +6,11 @@ return [
 
     'default'   => [
         'length'    => 4,
-        //'width'     => 120,
-        'height'    => 30,
+        'width'     => 150,
+        'height'    => 40,
         'quality'   => 90,
-        'bgImage'   => true,
-        'bgColor'   => '#f0f0f0',
+        //'bgImage'   => true,
+        'bgColor'   => '#000000',
         'lines'     => 0,
         'fontColors'=> ['#2c3e50', '#c0392b', '#16a085', '#c0392b', '#8e44ad', '#303f9f', '#f57c00', '#795548'],
         'contrast'  => -5,

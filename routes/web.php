@@ -20,7 +20,9 @@ Route::group(['prefix'=>'home','namespace'=>'Home'],function(){
     Route::group(['prefix'=>'member'],function(){
        Route::match(['get','post'],'register','MemberController@register');
        Route::post('login','MemberController@login');
+       Route::get('logout','MemberController@logout');
        Route::get('captcha','MemberController@captcha');
+       Route::get('info','MemberController@info');
        Route::match(['get','post'],'sendSms','MemberController@sendSms');
        Route::post('checkSms','MemberController@checkSms');
        Route::post('checkCaptcha','MemberController@checkCaptcha');

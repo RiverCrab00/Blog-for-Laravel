@@ -8,6 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="{{asset('Home')}}/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="{{asset('Home')}}/css/buttons.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{{asset('Home')}}/js/buttons.js"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript" src="{{asset('Home')}}/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{asset('Home')}}/js/jquery-1.11.2.min.js"></script>

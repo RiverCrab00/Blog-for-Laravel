@@ -10,10 +10,11 @@
     <style type="text/css">
         #right{
             float: right;
+            position: absolute;
+            right:150px;
+            top:30px;
         }
-        .button {
-            height: 30px;
-        }
+
         .logo {
             padding: 8px 0 20px 20px;
         }
@@ -26,13 +27,13 @@
             padding: 5px 20px;
         }
     </style>
-    <script type="text/javascript" src="{{asset('Home')}}/js/cufon-yui.js"></script>
+    {{--<script type="text/javascript" src="{{asset('Home')}}/js/cufon-yui.js"></script>
     <script type="text/javascript" src="{{asset('Home')}}/js/arial.js"></script>
-    <script type="text/javascript" src="{{asset('Home')}}/js/cuf_run.js"></script>
+    <script type="text/javascript" src="{{asset('Home')}}/js/cuf_run.js"></script>--}}
     <script type="text/javascript" src="{{asset('Home')}}/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{asset('Home')}}/js/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" src="{{asset('Home')}}/js/layer/layer.js"></script>
-
+    <script type="text/javascript" src="{{asset('Home')}}/js/buttons.js"></script>
     <!-- CuFon ends -->
 </head>
 <body>
@@ -42,14 +43,21 @@
             <div class="logo">
                 <h1><a href="index.html">Simple<span>writing</span></a><small>Let's go</small></h1>
                 <span id="right">
-                    @if(Auth::guest('home'))
-                        <a href="javascript:void(0)">
-                            欢迎您,{{Auth::guard('home')->user()->mem_name}}
-                        </a>
-                        <a href="{{url('home/member/logout')}}">注销</a>
+                    @if(Auth::guard('home')->check())
+<span class="button-dropdown button-dropdown-primary" data-buttons="dropdown">
+    <button class="button button-primary  button-rounded button-longshadow-right">
+      <i class="fa fa-user-o">&nbsp;{{Auth::guard('home')->user()->mem_name}}</i>
+    </button>
+
+    <ul class="button-dropdown-list is-below">
+      <li><a href="#"><i class="fa fa-vcard-o fa-lg"></i>&emsp;个人信息</a></li>
+      <li><a href="#"><i class="fa fa-telegram fa-lg"></i>&emsp;发布文章</a></li>
+      <li><a href="{{url('home/member/logout')}}"><i class="fa fa-sign-out fa-lg"></i>&emsp;退出</a></li>
+    </ul>
+  </span>
                     @else
-                        <a href="javascript:void(0)">登录</a>
-                        <a href="javascript:void(0)">注册</a>
+                        <a href="javascript:void(0)" class="button button-borderless button-rounded button-small button-plain">登录</a>
+                        <a href="javascript:void(0)" class="button button-borderless button-rounded button-small button-plain">注册</a>
                     @endif
 
                 </span>
@@ -68,7 +76,7 @@
           <span>
           <input name="q" type="text" class="keywords" id="textfield" maxlength="50" placeholder="Search..." />
            </span>
-                        <input name="b" type="image" src="{{asset('Home')}}/images/search.gif" class="button" />
+                        <input name="b" type="image" src="{{asset('Home')}}/images/search.gif" class="" />
 
                     </form>
                 </div>
