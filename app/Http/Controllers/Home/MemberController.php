@@ -85,7 +85,7 @@ class MemberController extends Controller
     function sendSms(Request $request){
         $phone=$request->input('phone');
         $config = [
-            'accessKeyId'    => 'LTAIh7A6op2uz4Mj',
+            'accessKeyId'    => '',#LTAIh7A6op2uz4Mj
             'accessKeySecret' => 'AZMp0elpzbwFaPHUftAVbzwPbpT7so',
         ];
         $client  = new Client($config);
